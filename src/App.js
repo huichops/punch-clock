@@ -3,7 +3,6 @@
 // - Use objects instead of strings
 // - save on localStorage
 // - add punchClock
-// - add tests
 
 import React, { Component } from 'react';
 import { 
@@ -11,63 +10,13 @@ import {
   Container,
   Header,
   Input,
-  List
+  List,
 } from 'semantic-ui-react';
-
 import './App.css';
 
-const textToTime = (text) => {
-  const defaultTime = {
-    hours: 0,
-    minutes: 0,
-    text: '00:00'
-  };
-  if (!text) return defaultTime;
+import { substractTime, sumTime } from './utils/time';
+import TimeEntry from './components/TimeEntry';
 
-  const [hours, minutes] = text.split(':');
-  
-  if (!hours.length || !minutes.length) return defaultTime;
-  return {hours: Number(hours), minutes: Number(minutes), text};
-};
-
-const numberPadding = (number, pad = 2) => {
-  const stringNumber = number.toString();
-  if (stringNumber.length < pad) return `0${stringNumber}`;
-  return stringNumber;
-};
-
-const sumTime = (exitTime, entranceTime) => {
-  const entrance = textToTime(entranceTime);
-  const exit = textToTime(exitTime);
-
-  const entranceMinutes = entrance.hours * 60 + entrance.minutes;
-  const exitMinutes = exit.hours * 60 + exit.minutes;
-  const totalMinutes = exitMinutes + entranceMinutes;
-
-  return `${numberPadding(Math.floor(totalMinutes / 60))}:${numberPadding(totalMinutes % 60)}`;
-};
-const substractTime = (exitTime, entranceTime) => {
-  const entrance = textToTime(entranceTime);
-  const exit = textToTime(exitTime);
-
-  const entranceMinutes = entrance.hours * 60 + entrance.minutes;
-  const exitMinutes = exit.hours * 60 + exit.minutes;
-  const totalMinutes = exitMinutes - entranceMinutes;
-
-  return `${numberPadding(Math.floor(totalMinutes / 60))}:${numberPadding(totalMinutes % 60)}`;
-};
-
-const TimeEntry = ({entranceTime, exitTime}) => {
-  const totalTime = substractTime(exitTime, entranceTime);
-  return (
-    <List.Item>
-      <List.Icon name='clock' />
-      <List.Content>
-        <List.Header>{totalTime} -> {entranceTime} - {exitTime}</List.Header>
-      </List.Content>
-    </List.Item>
-  );
-}
 class App extends Component {
   constructor() {
     super();
@@ -75,12 +24,12 @@ class App extends Component {
       timeEntries: [],
       total: '00:00'
     };
-    
   }
+
   logTime = () => {
     const entranceTime = document.querySelector('[name=entranceTime]').value;
     const exitTime = document.querySelector('[name=exitTime]').value;
-    const newLog = <TimeEntry entranceTime={entranceTime} exitTime={exitTime} />;
+    const newLog = <TimeEntry startTime={entranceTime} endTime={exitTime} />;
 
     this.setState({
       timeEntries: [newLog, ...this.state.timeEntries],
