@@ -1,9 +1,3 @@
-// TODO 
-// - add js-joda
-// - Use objects instead of strings
-// - save on localStorage
-// - add punchClock
-
 import React, { Component } from 'react';
 import { 
   Button,
