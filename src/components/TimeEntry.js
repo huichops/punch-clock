@@ -1,12 +1,12 @@
 import React from 'react'; 
 import { List } from 'semantic-ui-react';
 
-import { substractTime } from '../utils/time';
+import { subtractTime } from '../utils/time';
 
 
 
 const TimeEntry = ({startTime, endTime}) => {
-  const totalTime = substractTime(endTime, startTime);
+  const totalTime = subtractTime(endTime, startTime);
   return (
     <List.Item>
       <List.Icon name='clock' />

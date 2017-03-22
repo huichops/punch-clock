@@ -11,7 +11,7 @@ const numberPadding = (number, pad = 2) => {
   return stringNumber;
 };
 
-const substractTime = (exitTime, entranceTime) => {
+const subtractTime = (exitTime, entranceTime) => {
   const defaultTime = '00:00';
   const entrance = textToTime(entranceTime);
   const exit = textToTime(exitTime);
@@ -39,6 +39,6 @@ const sumTime = (exitTime, entranceTime) => {
 };
 
 export {
-  substractTime,
+  subtractTime,
   sumTime
 }

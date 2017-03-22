@@ -8,7 +8,7 @@ import {
 } from 'semantic-ui-react';
 import './App.css';
 
-import { substractTime, sumTime } from './utils/time';
+import { subtractTime, sumTime } from './utils/time';
 import TimeEntry from './components/TimeEntry';
 
 class App extends Component {
@@ -27,7 +27,7 @@ class App extends Component {
 
     this.setState({
       timeEntries: [newLog, ...this.state.timeEntries],
-      total: sumTime(this.state.total, substractTime(exitTime, entranceTime))
+      total: sumTime(this.state.total, subtractTime(exitTime, entranceTime))
     });
   }
 
