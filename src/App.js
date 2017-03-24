@@ -8,30 +8,24 @@ import {
 } from 'semantic-ui-react';
 import './App.css';
 
-import { subtractTime, sumTime } from './utils/time';
 import TimeEntry from './components/TimeEntry';
 
+const mapTimes = (entries) => entries.map(({startTime, endTime}) => <TimeEntry startTime={startTime} endTime={endTime} />);
+
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      timeEntries: [],
-      total: '00:00'
-    };
-  }
-
   logTime = () => {
-    const entranceTime = document.querySelector('[name=entranceTime]').value;
-    const exitTime = document.querySelector('[name=exitTime]').value;
-    const newLog = <TimeEntry startTime={entranceTime} endTime={exitTime} />;
+    const startTime = document.querySelector('[name=entranceTime]').value;
+    const endTime = document.querySelector('[name=exitTime]').value;
+    this.props.logTime({endTime, startTime});
 
-    this.setState({
-      timeEntries: [newLog, ...this.state.timeEntries],
-      total: sumTime(this.state.total, subtractTime(exitTime, entranceTime))
-    });
+    // this.setState({
+    //   timeEntries: [newLog, ...this.state.timeEntries],
+    //   total: sumTime(this.state.total, subtractTime(exitTime, entranceTime))
+    // });
   }
 
   render() {
+    console.log(this.props);
     return (
       <div className="App">
         <Header as="h1">CHK</Header>
@@ -49,9 +43,8 @@ class App extends Component {
             defaultValue="21:00"
           />
           <Button primary onClick={this.logTime}>Log time</Button>
-          <Header as="h2">{this.state.total}</Header>
           <List>
-            {this.state.timeEntries}
+            {mapTimes(this.props.entries)}
           </List>
         </Container>
       </div>

@@ -19,3 +19,26 @@ describe('actions', () => {
     expect(actual).toEqual(expected);
   });
 });
+
+describe('reducers', () => {
+  it('should return an empty array if no state provided', () => {
+    const expected = [];
+    const actual = reduce();
+
+    expect(actual).toEqual(expected);
+  });
+  it('should add a time log entry to state', () => {
+    const action = {
+      type: LOG_TIME,
+      payload: {
+        startTime: '16:21',
+        endTime: '20:43',
+        totalTime: '04:22'
+      }
+    };
+    const expected = [action.payload];
+    const actual = reduce([], action);
+
+    expect(actual).toEqual(expected);
+  });
+});
