@@ -4,10 +4,9 @@ import { List, Container } from 'semantic-ui-react';
 
 import TimeEntry from './TimeEntry';
 
-const mapTimes = (entries) => 
-  entries.map(({startTime, endTime}) => 
-    <TimeEntry startTime={startTime} endTime={endTime} />
-  );
+const mapTimes = (entries) => entries.map(({ startTime, endTime }, index) => (
+    <TimeEntry startTime={startTime} endTime={endTime} key={index} />
+));
 
 const TimeList = ({ entries }) => (
   <Container>
@@ -17,4 +16,4 @@ const TimeList = ({ entries }) => (
   </Container>
 );
 
-export default connect(state => ({entries: state}))(TimeList);
+export default connect(state => ({ entries: state }))(TimeList);

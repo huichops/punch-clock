@@ -1,17 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import PunchClock, { logTime } from './redux/PunchClock';
+import { Provider } from 'react-redux';
 
 import App from './App';
+import PunchClock from './redux/PunchClock';
+
 import './index.css';
 import 'semantic-ui-css/semantic.min.css';
 
-const store = createStore(
-  PunchClock,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const getLocalStorage = () => JSON.parse(localStorage.redux || "[]");
+const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+
+const store = createStore(PunchClock, getLocalStorage(), devTools);
 
 ReactDOM.render(
   <Provider store={store}>

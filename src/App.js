@@ -6,7 +6,6 @@ import LogTime from './components/LogTime';
 import TimeList from './components/TimeList';
 
 class App extends Component {
-
   render() {
     return (
       <div className="App">

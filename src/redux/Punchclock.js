@@ -13,9 +13,10 @@ export function logTime(time) {
 }
 
 export default function reduce(state = [], action = {}) {
-  const {type} = action;
-  switch (type) {
-    case LOG_TIME: return [action.payload, ...state];
-    default: return state;
-  };
+  switch (action.type) {
+    case LOG_TIME: 
+      return [action.payload, ...state];
+    default: 
+      return state;
+  }
 }
