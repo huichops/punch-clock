@@ -12,10 +12,13 @@ export function logTime(time) {
   };
 }
 
-export default function reduce(state = [], action = {}) {
+export default function reduce(state = { entries: [] }, action = {}) {
   switch (action.type) {
     case LOG_TIME: 
-      return [action.payload, ...state];
+      return Object.assign({},
+        state,
+        { entries: [action.payload, ...state.entries] }
+      );
     default: 
       return state;
   }

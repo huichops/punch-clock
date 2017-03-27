@@ -39,6 +39,7 @@ const sumTime = (exitTime, entranceTime) => {
 };
 
 export {
+  textToTime,
   subtractTime,
   sumTime
 }

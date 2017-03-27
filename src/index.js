@@ -1,18 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
 
-import App from './App';
+import { createStore, compose } from 'redux';
+import { Provider } from 'react-redux';
+import persistState from 'redux-localstorage'
+
 import PunchClock from './redux/PunchClock';
 
+import App from './App';
 import './index.css';
 import 'semantic-ui-css/semantic.min.css';
 
-const getLocalStorage = () => JSON.parse(localStorage.redux || "[]");
-const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
-
-const store = createStore(PunchClock, getLocalStorage(), devTools);
+const initialState = { entries: [] };
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const enhacer = composeEnhancers(persistState());
+const store = createStore(PunchClock, initialState, enhacer);
 
 ReactDOM.render(
   <Provider store={store}>

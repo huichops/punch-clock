@@ -21,8 +21,8 @@ describe('actions', () => {
 });
 
 describe('reducers', () => {
-  it('should return an empty array if no state provided', () => {
-    const expected = [];
+  it('should return an empty array in entries if no action provided', () => {
+    const expected = { entries: [] };
     const actual = reduce();
 
     expect(actual).toEqual(expected);
@@ -36,8 +36,10 @@ describe('reducers', () => {
         totalTime: '04:22'
       }
     };
-    const expected = [action.payload];
-    const actual = reduce([], action);
+    const expected = {
+      entries: [action.payload]
+    };
+    const actual = reduce(undefined, action);
 
     expect(actual).toEqual(expected);
   });

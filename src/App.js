@@ -4,6 +4,7 @@ import './App.css';
 
 import LogTime from './components/LogTime';
 import TimeList from './components/TimeList';
+import TotalTime from './components/TotalTime';
 
 class App extends Component {
   render() {
@@ -12,6 +13,7 @@ class App extends Component {
         <Header as="h1">CHK</Header>
         <LogTime />
         <TimeList />
+        <TotalTime />
       </div>
     );
   }
