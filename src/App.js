@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header } from 'semantic-ui-react';
+import { Header, Container } from 'semantic-ui-react';
 import './App.css';
 
 import LogTime from './components/LogTime';
@@ -10,10 +10,12 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header as="h1">CHK</Header>
-        <LogTime />
-        <TimeList />
-        <TotalTime />
+        <Container>
+          <Header as="h1">CHK</Header>
+          <LogTime />
+          <TotalTime />
+          <TimeList />
+        </Container>
       </div>
     );
   }

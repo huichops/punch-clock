@@ -13,7 +13,7 @@ const TimeEntry = ({ startTime, endTime,  totalTime = '00:00' }) => {
       <List.Content>
         <List.Header>
           <div className='totalTime'>
-            {hours} hours {minutes} minutes 
+            {hours} horas {minutes} minutos 
           </div> 
           <span className='startTime'>{startTime}</span> -
           <span className='endTime'>{endTime}</span>
