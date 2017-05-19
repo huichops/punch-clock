@@ -1,8 +1,9 @@
 const textToTime = (text = '') => {
+  if (!text.length) return { hours: 0, minutes: 0 };
   const [hours, minutes] = text.split(':');
 
   if (!hours.length || !minutes.length) return null;
-  return {hours: Number(hours), minutes: Number(minutes), text};
+  return { hours: Number(hours), minutes: Number(minutes), text };
 };
 
 const numberPadding = (number, pad = 2) => {
