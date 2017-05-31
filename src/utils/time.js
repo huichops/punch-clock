@@ -12,6 +12,10 @@ const numberPadding = (number, pad = 2) => {
   return stringNumber;
 };
 
+const timeToText = (minutes) => {
+  return `${numberPadding(Math.floor(minutes / 60))}:${numberPadding(minutes % 60)}`
+};
+
 const subtractTime = (exitTime, entranceTime) => {
   const defaultTime = '00:00';
   const entrance = textToTime(entranceTime);
@@ -40,6 +44,7 @@ const sumTime = (exitTime, entranceTime) => {
 };
 
 export {
+  timeToText,
   textToTime,
   subtractTime,
   sumTime

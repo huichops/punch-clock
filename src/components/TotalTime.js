@@ -2,23 +2,27 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { Header } from 'semantic-ui-react';
-import { subtractTime, sumTime, textToTime } from '../utils/time';
+import { timeToText } from '../utils/time';
 
-const toComplete = '480:00';
+const toComplete = 480 * 60;
 
 const TotalTime = ({ remainingTime }) => (
   <Header as="h2">
-    Te faltan {remainingTime.hours} horas {remainingTime.minutes} minutos
+    Te faltan {Math.floor(remainingTime / 60)} horas {remainingTime % 60} minutos
   </Header>
 );
 
 const mapStateToProps = ({ entries }) => {
-
   const totalTime = entries
-    .map(({ totalTime }) => totalTime)
-    .reduce((a, b) => sumTime(a, b), 0);
+    .map(({ startTime, endTime }) => {
+      console.log((endTime - startTime) / 1000 / 60);
+      return (endTime - startTime) / 1000 / 60;
+    })
+    .reduce((a, b) => a + b, 0);
 
-  const remainingTime = textToTime(subtractTime(toComplete, totalTime));
+  console.log(toComplete);
+  const remainingTime = toComplete - totalTime;
   return { remainingTime };
 };
+
 export default connect(mapStateToProps)(TotalTime);
