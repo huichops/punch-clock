@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { Header } from 'semantic-ui-react';
-import { timeToText } from '../utils/time';
 
 const toComplete = 480 * 60;
 
@@ -15,12 +14,10 @@ const TotalTime = ({ remainingTime }) => (
 const mapStateToProps = ({ entries }) => {
   const totalTime = entries
     .map(({ startTime, endTime }) => {
-      console.log((endTime - startTime) / 1000 / 60);
       return (endTime - startTime) / 1000 / 60;
     })
     .reduce((a, b) => a + b, 0);
 
-  console.log(toComplete);
   const remainingTime = toComplete - totalTime;
   return { remainingTime };
 };

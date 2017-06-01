@@ -1,7 +1,7 @@
-import { subtractTime } from '../utils/time';
+export const LOG_TIME = 'LOG_TIME';
+export const EDIT_TIME_ENTRY = 'EDIT_TIME_ENTRY';
 
 const createTimestamp = value => (new Date(value)).getTime();
-export const LOG_TIME = 'LOG_TIME';
 
 export function logTime(time = {}) {
   const { date, startTime, endTime } = time;
@@ -18,13 +18,40 @@ export function logTime(time = {}) {
   };
 }
 
+export function editTimeEntry(id, time = {}) {
+  const { date, startTime, endTime } = time;
+  const startTimestamp = createTimestamp(`${date}T${startTime}`);
+  const endTimestamp = createTimestamp(`${date}T${endTime}`);
+
+  return {
+    type: EDIT_TIME_ENTRY,
+    payload: {
+      id,
+      date: createTimestamp(date),
+      startTime: startTimestamp,
+      endTime: endTimestamp
+    }
+  };
+}
+
 export default function reduce(state = { entries: [] }, action = {}) {
   switch (action.type) {
     case LOG_TIME:
+      const nextId = state.entries.reduce((max, { id }) => Math.max(id, max), -1) + 1;
       return Object.assign({},
         state,
-        { entries: [action.payload, ...state.entries] }
+        {
+          entries: [
+            { id: nextId, ...action.payload },
+            ...state.entries
+          ]
+        }
       );
+    case EDIT_TIME_ENTRY:
+      const { id, ...time } = action.payload;
+      const entries = [...state.entries].map(t => id === t.id ? { ...t, ...time } : t);
+      return Object.assign({}, state, { entries });
+
     default:
       return state;
   }

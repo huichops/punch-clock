@@ -16,36 +16,4 @@ const timeToText = (minutes) => {
   return `${numberPadding(Math.floor(minutes / 60))}:${numberPadding(minutes % 60)}`
 };
 
-const subtractTime = (exitTime, entranceTime) => {
-  const defaultTime = '00:00';
-  const entrance = textToTime(entranceTime);
-  const exit = textToTime(exitTime);
-
-  if (!entrance || !exit) return defaultTime;
-
-  const entranceMinutes = entrance.hours * 60 + entrance.minutes;
-  const exitMinutes = exit.hours * 60 + exit.minutes;
-  const totalMinutes = exitMinutes - entranceMinutes;
-
-  if (totalMinutes < 0) return defaultTime;
-
-  return `${numberPadding(Math.floor(totalMinutes / 60))}:${numberPadding(totalMinutes % 60)}`;
-};
-
-const sumTime = (exitTime, entranceTime) => {
-  const entrance = textToTime(entranceTime);
-  const exit = textToTime(exitTime);
-
-  const entranceMinutes = entrance.hours * 60 + entrance.minutes;
-  const exitMinutes = exit.hours * 60 + exit.minutes;
-  const totalMinutes = exitMinutes + entranceMinutes;
-
-  return `${numberPadding(Math.floor(totalMinutes / 60))}:${numberPadding(totalMinutes % 60)}`;
-};
-
-export {
-  timeToText,
-  textToTime,
-  subtractTime,
-  sumTime
-}
+export { timeToText, textToTime, numberPadding };

@@ -1,4 +1,4 @@
-import reduce, { logTime, LOG_TIME } from './Punchclock';
+import reduce, { editTimeEntry, logTime, LOG_TIME, EDIT_TIME_ENTRY } from './Punchclock';
 
 const createTimestamp = value => (new Date(value)).getTime();
 describe('actions', () => {
@@ -18,6 +18,30 @@ describe('actions', () => {
         date: createTimestamp(time.date),
         startTime: startTime,
         endTime: endTime
+      }
+    };
+
+    expect(actual).toEqual(expected);
+  });
+
+  it('should create an action to edit a time entry', () => {
+    const time = {
+      date: '2017-05-25',
+      startTime: '16:21',
+      endTime: '20:43'
+    };
+    const startTime = createTimestamp(`${time.date}T${time.startTime}`);
+    const endTime = createTimestamp(`${time.date}T${time.endTime}`);
+    const index = 5;
+
+    const actual = editTimeEntry(index, time);
+    const expected = {
+      type: EDIT_TIME_ENTRY,
+      payload: {
+        index,
+        startTime,
+        endTime,
+        date: createTimestamp(time.date),
       }
     };
 

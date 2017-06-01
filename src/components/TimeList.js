@@ -1,29 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { List, Container } from 'semantic-ui-react';
 
-import { timeToText } from '../utils/time';
+import { editTimeEntry } from '../redux/PunchClock';
+import { numberPadding, timeToText } from '../utils/time';
 import TimeEntry from './TimeEntry';
-
-const numberPadding = (number, pad = 2) => {
-  const stringNumber = number.toString();
-  if (stringNumber.length < pad) return `0${stringNumber}`;
-  return stringNumber;
-};
-const mapTimes = entries => entries.map(({ startTime, endTime, totalTime, date }, index) => (
+;
+const mapTimes = (entries, onEdit) => entries.map(({ id, startTime, endTime, totalTime, date}) => (
   <TimeEntry
     date={date}
     startTime={startTime}
     endTime={endTime}
     totalTime={totalTime}
-    key={index}
+    id={id}
+    key={id}
+    onEdit={onEdit}
   />
 ));
 
-const TimeList = ({ entries }) => (
+const TimeList = ({ entries, onEdit }) => (
   <Container>
     <List>
-      { mapTimes(entries) }
+      { mapTimes(entries, onEdit) }
     </List>
   </Container>
 );
@@ -35,13 +34,21 @@ const mapStateToProps = ({ entries }) => {
       const endTime = new Date(e.endTime);
       const totalTime = (endTime - startTime) / 1000 / 60;
       const date = new Date(e.date);
+      const month = numberPadding(date.getUTCMonth() + 1);
+      const day = numberPadding(date.getUTCDate());
       return {
-        date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+        date: `${date.getFullYear()}-${month}-${day}`,
         startTime: `${startTime.getHours()}:${numberPadding(startTime.getMinutes())}`,
         endTime: `${endTime.getHours()}:${numberPadding(endTime.getMinutes())}`,
-        totalTime: timeToText(totalTime)
+        totalTime: timeToText(totalTime),
+        id: e.id
       };
     })
   };
 };
-export default connect(mapStateToProps)(TimeList);
+
+const mapDispatchToProps = dispatch => ({
+  onEdit: bindActionCreators( editTimeEntry, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TimeList);
