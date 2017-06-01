@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Input } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 import { numberPadding } from '../utils/time';
 
 const now = () => {
@@ -31,32 +31,37 @@ class LogTime extends Component {
 
   render() {
     return (
-      <div>
-        <Input
-          label={{ basic: true, content: 'Fecha' }}
-          name='date'
-          type='date'
-          onChange={this.handleDate}
-          value={this.state.date}
-        />
-        <Input
-          label={{ basic: true, content: 'Entrada' }}
-          type='time'
-          name='startTime'
-          onChange={this.handleStartTime}
-          value={this.state.startTime}
-        />
-        <Input
-          label={{ basic: true, content: 'Salida' }}
-          type='time'
-          name='endTime'
-          onChange={this.handleEndTime}
-          value={this.state.endTime}
-        />
-        <Button primary type='submit' onClick={this.handleSave}>
-          Log time
-        </Button>
-      </div>
+      <Form onSubmit={this.handleSave}>
+        <Form.Group widths='equal'>
+          <Form.Input
+            name='date'
+            type='date'
+            onChange={this.handleDate}
+            value={this.state.date}
+          />
+          <Form.Input
+            type='time'
+            name='startTime'
+            onChange={this.handleStartTime}
+            value={this.state.startTime}
+          />
+          <Form.Input
+            type='time'
+            name='endTime'
+            onChange={this.handleEndTime}
+            value={this.state.endTime}
+          />
+          <Form.Button
+            labelPosition='right'
+            content='Log'
+            icon='clock'
+            type='submit'
+            onClick={this.handleSave}
+            floated='right'
+            primary
+          />
+        </Form.Group>
+      </Form>
     );
   }
 }

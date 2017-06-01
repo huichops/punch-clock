@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { List, Container } from 'semantic-ui-react';
+import { List, Container, Segment } from 'semantic-ui-react';
 
 import { editTimeEntry } from '../redux/PunchClock';
 import { numberPadding, timeToText } from '../utils/time';
@@ -21,9 +21,13 @@ const mapTimes = (entries, onEdit) => entries.map(({ id, startTime, endTime, tot
 
 const TimeList = ({ entries, onEdit }) => (
   <Container>
-    <List>
-      { mapTimes(entries, onEdit) }
-    </List>
+    <Segment>
+      <Container>
+      <List>
+        { mapTimes(entries, onEdit) }
+      </List>
+      </Container>
+    </Segment>
   </Container>
 );
 

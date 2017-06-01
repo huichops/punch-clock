@@ -8,23 +8,23 @@ const Entry = ({ totalTime, date, startTime, endTime, onClick }) => {
   const { hours, minutes } = textToTime(totalTime);
 
   return (
-    <List.Item>
-      <List.Icon name='clock' />
-      <List.Content>
+    <div>
+      <List.Content floated='left'>
         <List.Header>
-          <span className='totalTime'>
-            {hours} horas {minutes} minutos
-            {' '}
-            <Button onClick={onClick} size='small'>
-              Editar
-            </Button>
-          </span>
-        </List.Header>
           <span className='date'><strong>{date}</strong></span> --
           <span className='startTime'>{startTime}</span> -
           <span className='endTime'>{endTime}</span>
+        </List.Header>
+        <span className='totalTime'>
+          {hours} horas {minutes} minutos
+        </span>
       </List.Content>
-    </List.Item>
+      <List.Content floated='right'>
+        <Button onClick={onClick} size='small'>
+          Editar
+        </Button>
+      </List.Content>
+    </div>
   );
 };
 
@@ -47,7 +47,11 @@ class TimeEntry extends Component {
     if (this.state.editing) element = <LogTime {...this.props} onSave={(timeEntry) => this.handleSave(id, timeEntry)} />;
     else element = <Entry {...this.props} onClick={this.handleClick} />;
 
-    return element;
+    return (
+      <List.Item>
+        {element}
+      </List.Item>
+    );
   }
 }
 

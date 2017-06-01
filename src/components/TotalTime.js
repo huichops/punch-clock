@@ -6,7 +6,7 @@ import { Header } from 'semantic-ui-react';
 const toComplete = 480 * 60;
 
 const TotalTime = ({ remainingTime }) => (
-  <Header as="h2">
+  <Header as='h2'>
     Te faltan {Math.floor(remainingTime / 60)} horas {remainingTime % 60} minutos
   </Header>
 );
