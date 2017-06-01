@@ -32,33 +32,28 @@ class LogTime extends Component {
   render() {
     return (
       <div>
-        <div>
-          <Input
-            label={{ basic: true, content: 'Entrada' }}
-            name='date'
-            type='date'
-            onChange={this.handleDate}
-            value={this.state.date}
-          />
-          <Input
-            label={{ basic: true, content: 'Entrada' }}
-            type='time'
-            name='startTime'
-            onChange={this.handleStartTime}
-            value={this.state.startTime}
-          />
-          <Input
-            label={{ basic: true, content: 'Salida' }}
-            type='time'
-            name='endTime'
-            onChange={this.handleEndTime}
-            value={this.state.endTime}
-          />
-        </div>
-        <Button
-          primary
-          type='submit'
-          onClick={this.handleSave}>
+        <Input
+          label={{ basic: true, content: 'Fecha' }}
+          name='date'
+          type='date'
+          onChange={this.handleDate}
+          value={this.state.date}
+        />
+        <Input
+          label={{ basic: true, content: 'Entrada' }}
+          type='time'
+          name='startTime'
+          onChange={this.handleStartTime}
+          value={this.state.startTime}
+        />
+        <Input
+          label={{ basic: true, content: 'Salida' }}
+          type='time'
+          name='endTime'
+          onChange={this.handleEndTime}
+          value={this.state.endTime}
+        />
+        <Button primary type='submit' onClick={this.handleSave}>
           Log time
         </Button>
       </div>
