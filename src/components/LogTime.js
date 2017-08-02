@@ -25,6 +25,8 @@ class LogTime extends Component {
   handleDate = e => this.setState({ date: e.target.value });
 
   handleSave = (e) => {
+    e.preventDefault();
+
     const { date, startTime, endTime } = this.state;
     this.props.onSave({ date, startTime, endTime });
   }

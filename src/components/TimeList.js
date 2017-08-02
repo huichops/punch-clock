@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { List, Container, Segment } from 'semantic-ui-react';
 
-import { editTimeEntry } from '../redux/PunchClock';
+import { editTimeEntry, deleteTimeEntry } from '../redux/PunchClock';
 import { numberPadding, timeToText } from '../utils/time';
 import TimeEntry from './TimeEntry';
 ;
-const mapTimes = (entries, onEdit) => entries.map(({ id, startTime, endTime, totalTime, date}) => (
+const mapTimes = (entries, onEdit, onDelete) => entries.map(({ id, startTime, endTime, totalTime, date }) => (
   <TimeEntry
     date={date}
     startTime={startTime}
@@ -16,15 +16,16 @@ const mapTimes = (entries, onEdit) => entries.map(({ id, startTime, endTime, tot
     id={id}
     key={id}
     onEdit={onEdit}
+    onDelete={onDelete}
   />
 ));
 
-const TimeList = ({ entries, onEdit }) => (
+const TimeList = ({ entries, onEdit, onDelete }) => (
   <Container>
     <Segment>
       <Container>
       <List>
-        { mapTimes(entries, onEdit) }
+        { mapTimes(entries, onEdit, onDelete) }
       </List>
       </Container>
     </Segment>
@@ -52,7 +53,8 @@ const mapStateToProps = ({ entries }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  onEdit: bindActionCreators( editTimeEntry, dispatch)
+  onEdit: bindActionCreators(editTimeEntry, dispatch),
+  onDelete: bindActionCreators(deleteTimeEntry, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TimeList);

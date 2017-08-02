@@ -1,5 +1,6 @@
 export const LOG_TIME = 'LOG_TIME';
 export const EDIT_TIME_ENTRY = 'EDIT_TIME_ENTRY';
+export const DELETE_TIME_ENTRY = 'DELETE_TIME_ENTRY';
 
 const createTimestamp = value => (new Date(value)).getTime();
 
@@ -34,6 +35,12 @@ export function editTimeEntry(id, time = {}) {
   };
 }
 
+export function deleteTimeEntry(id) {
+  return {
+    type: DELETE_TIME_ENTRY,
+    payload: { id }
+  };
+}
 export default function reduce(state = { entries: [] }, action = {}) {
   switch (action.type) {
     case LOG_TIME:
@@ -48,9 +55,18 @@ export default function reduce(state = { entries: [] }, action = {}) {
         }
       );
     case EDIT_TIME_ENTRY:
-      const { id, ...time } = action.payload;
-      const entries = [...state.entries].map(t => id === t.id ? { ...t, ...time } : t);
-      return Object.assign({}, state, { entries });
+      {
+        const { id, ...time } = action.payload;
+        const entries = [...state.entries].map(t => id === t.id ? { ...t, ...time } : t);
+        return Object.assign({}, state, { entries });
+      }
+
+    case DELETE_TIME_ENTRY:
+      {
+        const { id } = action.payload;
+        const entries = [...state.entries].filter(t => id !== t.id);
+        return Object.assign({}, state, { entries });
+      }
 
     default:
       return state;

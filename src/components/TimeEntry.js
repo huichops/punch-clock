@@ -4,7 +4,7 @@ import { List, Button } from 'semantic-ui-react';
 import LogTime from './LogTime';
 import { textToTime } from '../utils/time';
 
-const Entry = ({ totalTime, date, startTime, endTime, onClick }) => {
+const Entry = ({ totalTime, date, startTime, endTime, onEdit, onDelete }) => {
   const { hours, minutes } = textToTime(totalTime);
 
   return (
@@ -20,8 +20,11 @@ const Entry = ({ totalTime, date, startTime, endTime, onClick }) => {
         </span>
       </List.Content>
       <List.Content floated='right'>
-        <Button onClick={onClick} size='small'>
+        <Button onClick={onEdit} size='small'>
           Editar
+        </Button>
+        <Button color='red' onClick={onDelete} size='small'>
+          Eliminar
         </Button>
       </List.Content>
     </div>
@@ -31,6 +34,10 @@ const Entry = ({ totalTime, date, startTime, endTime, onClick }) => {
 
 class TimeEntry extends Component {
   state = { editing: false }
+
+  handleDelete = (id) => {
+    this.props.onDelete(id);
+  }
 
   handleSave = (id, timeEntry) => {
     this.props.onEdit(id, timeEntry);
@@ -44,8 +51,12 @@ class TimeEntry extends Component {
   render() {
     const { id } = this.props;
     let element;
-    if (this.state.editing) element = <LogTime {...this.props} onSave={(timeEntry) => this.handleSave(id, timeEntry)} />;
-    else element = <Entry {...this.props} onClick={this.handleClick} />;
+    if (this.state.editing) {
+      element = <LogTime {...this.props} onSave={(timeEntry) => this.handleSave(id, timeEntry)} />;
+    }
+    else {
+      element = <Entry {...this.props} onEdit={this.handleClick} onDelete={(timeEntry) => this.handleDelete(id)} />;
+    }
 
     return (
       <List.Item>
